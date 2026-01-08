@@ -1,9 +1,8 @@
 from conection import session
 #fala que o paremetro e opicional para o fastapi
 from typing import Optional
-from model.produtos import Produto
 from fastapi import APIRouter, HTTPException,status
-from model.produtos import BaseCadastraProtudo, BaseVenderProtudo,BaseEditarProtudo
+from model.produtos import Produto,BaseCadastraProtudo, BaseVenderProtudo,BaseEditarProtudo
 from sqlalchemy.exc import IntegrityError
 
 Rota_Produto = APIRouter()
@@ -26,6 +25,7 @@ def cadastra_protudo(base : BaseCadastraProtudo):
     #tratamento caso tenta cadastra o produto com memo. 
     #pois o banco não permite dois produto com o mesmo nome
     except IntegrityError:
+        session.rollback()
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail='já há um produto cadastrado com esse nome'

@@ -1,4 +1,5 @@
 from conection import engine,Base
+from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String
 from passlib.hash import sha256_crypt as sha256
 
@@ -15,12 +16,23 @@ class Usuario(Base):
         self.nome = nome
         self.email = email
         self.senha = sha256.encrypt(senha)
-    
 
+    def altera_senha(self,senha):
+        self.senha = sha256.encrypt(senha)
+    
+    def verificar_senha(self, senha):
+        return sha256.verify(senha, self.senha) # type: ignore
+    
 #cria a tabela na paratica
 Base.metadata.create_all(engine)
 
+class BaseCriarUsuario(BaseModel):
+    nome : str
+    senha : str
+    email : str
 
-
+class BaseLogarUsuario(BaseModel):
+    email: str
+    senha : str
 
 

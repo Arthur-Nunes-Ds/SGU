@@ -2,7 +2,6 @@ from conection import engine,Base
 from decimal import Decimal
 from sqlalchemy import Column, Integer, String, Numeric
 from pydantic import BaseModel
-from typing import Optional
 
 #cria a base da tabela
 class Produto(Base):
