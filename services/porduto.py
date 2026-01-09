@@ -1,16 +1,18 @@
-from conection import session
+from conection import get_session
+from sqlalchemy.orm import Session
 #fala que o paremetro e opicional para o fastapi
 from typing import Optional
-from fastapi import APIRouter, HTTPException,status
+from fastapi import APIRouter, HTTPException,status, Depends
 #from .depeds import verificar_toke
 from model.produtos import Produto,BaseCadastraProtudo, BaseVenderProtudo,BaseEditarProtudo
 from sqlalchemy.exc import IntegrityError
+from .depeds import RolePermitidas
 
-#FIXME - bloque todas rotas para que só o fucionario possa acessar
-Rota_Produto = APIRouter()
+#aplica uma depedencia em todas as rotas desse arquivo
+Rota_Produto = APIRouter(dependencies=[Depends(RolePermitidas(['fucionario','adm']))])
 
 @Rota_Produto.post('/cadastra_produto')
-def cadastra_protudo(base : BaseCadastraProtudo):
+def cadastra_protudo(base : BaseCadastraProtudo,session: Session = Depends(get_session)):
     '''O preço tem que ser informato no seguinte formato: 00.00 '''
     if base.qnt <= 0 or float(base.prc) <= 0:
          #erro no fatapi 
@@ -36,10 +38,10 @@ def cadastra_protudo(base : BaseCadastraProtudo):
     return {'mensagem':'produto cadastrado com sucesso'}
 
 @Rota_Produto.get('/lista_todos_protudos')
-def listar_todos_protudos():
+def listar_todos_protudos(session: Session = Depends(get_session)):
     query_p = session.query(Produto).all()
     #ver se tem o dados na db
-    if not query_p == None:
+    if query_p != []:
         produto_final = {'mesagem':[]}
         #pecorre cada produto e o formata para uma lista melhor
         for i in query_p:
@@ -58,7 +60,7 @@ def listar_todos_protudos():
     # o erro ->  A expressão do tipo "None" não pode ser atribuída ao parâmetro do tipo "int" "None" 
     # não pode ser atribuído a "int" 
 @Rota_Produto.get('/procurar_produtuo')
-def procurar_produtuo(id: Optional[int] = None, nome: Optional[str] = None):
+def procurar_produtuo(id: Optional[int] = None, nome: Optional[str] = None, session: Session = Depends(get_session)):
     '''Pode escolhe se pasa só Id ou Nome do prodtudo. Não é necesario informa os dois'''
     query_p = None
     if id:
@@ -84,10 +86,10 @@ def procurar_produtuo(id: Optional[int] = None, nome: Optional[str] = None):
              detail="produto não cadastrado/encontrado"
         )
 
-@Rota_Produto.delete('/dell_produto/{id}')
-def dell_produto(id: int):
+@Rota_Produto.delete('/dell_produto/{id_protudo}')
+def dell_produto(id_protudo: int, session: Session = Depends(get_session)):
     #já ver se o produto existe e o deleta
-    query_p = session.query(Produto).filter_by(id = id).delete()
+    query_p = session.query(Produto).filter_by(id = id_protudo).delete()
 
     if query_p:
         session.commit()
@@ -99,7 +101,7 @@ def dell_produto(id: int):
         )
 
 @Rota_Produto.post('/vender_protudo')
-def vender_protudo(base: BaseVenderProtudo):
+def vender_protudo(base: BaseVenderProtudo, session: Session = Depends(get_session)):
     '''informe o Id ou o Nome sendoo que o Id tem que ser int e o nome tem que ser str  \
     \n caso não queira achar o protudo pelo Id pasta não informa-lo. \
     \n O mesmo vale para o Nome'''
@@ -128,7 +130,7 @@ def vender_protudo(base: BaseVenderProtudo):
                 'custo_da_venda':custo}
 
 @Rota_Produto.post('/etidar_protudo')
-def etidar_protudo(base: BaseEditarProtudo):
+def etidar_protudo(base: BaseEditarProtudo, session: Session = Depends(get_session)):
     '''caso não queira altera o dado do protudo basta só não pasa a chave'''
     query_p = session.query(Produto).filter_by(id = base.id).first()
     if query_p:

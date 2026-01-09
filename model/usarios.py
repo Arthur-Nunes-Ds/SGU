@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String
 from passlib.hash import sha256_crypt as sha256
 
+
 #cria a base da tabela
 class Usuario(Base):
     __tablename__ = "usuarios"
@@ -11,11 +12,13 @@ class Usuario(Base):
     nome = Column(String(200), nullable=False)
     email = Column(String(200), unique=True, nullable=False)
     senha = Column(String(255), nullable=False)
+    role = Column(String(200),nullable=False, default='cliente')
 
-    def __init__(self, nome, email, senha):
+    def __init__(self, nome, email, senha, role='cliente'):
         self.nome = nome
         self.email = email
         self.senha = sha256.encrypt(senha)
+        self.role = role
 
     def altera_senha(self,senha):
         self.senha = sha256.encrypt(senha)
@@ -34,3 +37,9 @@ class BaseCriarUsuario(BaseModel):
 class BaseEditarUsuarioi(BaseModel):
     nome : str | None = None
     senha : str | None = None
+
+class BaseEditarFucionario(BaseModel):
+    id : int 
+    nome : str | None = None
+    senha : str | None = None
+

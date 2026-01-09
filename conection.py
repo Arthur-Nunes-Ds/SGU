@@ -25,4 +25,11 @@ Base = declarative_base()
 
 #cria a sesion para manipular a db
 Session = sessionmaker(bind=engine)
-session = Session()
+
+#isso garante que toda fez que eu usar a orm na dependecia ele vai fechar sossinho
+def get_session():
+    session = Session()
+    try:
+        yield session
+    finally:
+        session.close()
