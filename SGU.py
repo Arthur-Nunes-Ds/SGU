@@ -2,6 +2,8 @@ if __name__ == "__main__":
     from json import dump
     from pathlib import Path
     from argparse import ArgumentParser
+    from conection import engine
+    from time import sleep as delay
     import atexit
 
     #para deletar o json_sqlite apos ser o servidor se encerado
@@ -9,14 +11,23 @@ if __name__ == "__main__":
         json = Path('config/.sgu_config.json')
         slqlite = Path('banco.db')
         try:
+            #finaliza todas conexação com o banco
+            engine.dispose()
+            #espere para garantir que fechou todas conexeção do banco
+            delay(0.5)
+
             if json.exists():
                 #unlink deleta o arvivo <- isso fica mas versatios para os
                 json.unlink()
 
             if slqlite.exists():
                 slqlite.unlink()
+
         except Exception as e:
             print(f"Erro ao deletar: {e}")
+            #se de algo errado ele para tentar refazer o processo
+            dell_json_sqlite()
+            
 
         print("\nServidor encerrado. Arquivo de config/temporario removido.")
 
@@ -36,7 +47,6 @@ if __name__ == "__main__":
         #assim tuddo isso vai ser baixodo pelo pip 
     paremtro.add_argument('--host-fronte', nargs='*', type=str, default=['*'] ,help='Lista de IP do fronte')
 
-
     #Analisa os argumentos
     args = paremtro.parse_args()
     
@@ -55,7 +65,6 @@ if __name__ == "__main__":
        else:
            print('não foi possivel achar os certificados verifica o nomes deles')
 
-
     #o unicorvn tem que se puxado antes para que de tempo das var DEBUG e SQLITE serem alterada
     import uvicorn
     
@@ -66,5 +75,5 @@ if __name__ == "__main__":
         #Modo produção (sem reload)
         uvicorn.run("main:app", host=args.host, port=args.port, reload=False,ssl_certfile=_ssl_certfile, ssl_keyfile=_ssl_keyfile)
     else:
-        print('por motivode seguranção o código não sera executado em modo de produção')
+        print('por motivos de seguranção o código não sera executado em modo de produção')
         uvicorn.run("main:app", host=args.host ,port=args.port, reload=True, ssl_certfile=_ssl_certfile, ssl_keyfile=_ssl_keyfile)

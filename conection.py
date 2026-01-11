@@ -8,15 +8,12 @@ endereco_db = None
 if DEBUG == True and SQLITE == True:
     endereco_db = "sqlite:///banco.db"
 else:  
-    #Garante que a senha com caracteres especiais seja lida como senha,
-        #não como parte do endereço. Sem o quote_plus, o SQLAlchemy pode interpretar
-        #'@' como parte do endereço, e não da senha.
         endereco_db = f"mysql+pymysql://{USER_DB}:{SENHA_DB}@{IP_DB}:{PORTA_DB}/{BANCO_DB}"
     
 try:
     #Cria a engine para conectar o python ao mysql
     engine = create_engine(endereco_db) 
-    #Cria uma conxeção e depois fecha amesma conexeção
+    #Cria uma conxeção e depois fecha a mesma conexeção
     engine.connect().close()
     #Esse erro acontece quando o SQLalchemy não consegue se conectar com a DB
 except OperationalError:

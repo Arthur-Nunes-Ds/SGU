@@ -20,6 +20,8 @@ def get_user():
         \n-Nenhum erro específico."""
     #Pega todos os dados da tabela direto do banco e transforma para DataFrame (tipo de dados do pandas)
     table_u = pd.read_sql_table('usuarios', engine)
+    #Remove o campo das senha
+    table_u = table_u.drop(columns=['senha'])
     #O BytesIO() permite armazenar tudo em uma posição da memória RAM do sistema, assim o arquivo é escrito na RAM do OS
     saida = BytesIO()
     #Evita erros ou fechamento incompleto da tabela. O 'openpyxl' é o driver que permite manipular Excel com uma precição melhor 
@@ -72,6 +74,7 @@ def get_all():
         \n-Nenhum erro específico."""
     table_p = pd.read_sql_table('produtos', engine)
     table_u = pd.read_sql_table('usuarios', engine)
+    table_u = table_u.drop(columns=['senha'])
     saida = BytesIO()
     with pd.ExcelWriter(saida, engine='openpyxl') as execel:
         table_p.to_excel(execel, sheet_name='produtos', index=False)
