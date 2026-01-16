@@ -16,7 +16,7 @@ requires-python = ">=3.8"
 dynamic = ["dependencies"]
 
 [project.scripts]
-sgu = "SGU:main"
+sgu = "src.SGU:main"
 
 #finalizando a configuração do requirements
 [tool.setuptools.dynamic]
