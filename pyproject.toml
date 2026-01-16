@@ -16,12 +16,11 @@ requires-python = ">=3.8"
 dynamic = ["dependencies"]
 
 [project.scripts]
-sgu = "src.SGU:main"
+sgu = "SGU:main"
 
 #finalizando a configuração do requirements
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
 
-[tool.setuptools.packages.find]
-#fala onde está o código fonte
-where = ["src"]
+[tool.setuptools]
+py-modules = ["SGU"]
