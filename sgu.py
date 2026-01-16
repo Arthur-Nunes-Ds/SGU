@@ -2,7 +2,7 @@ if __name__ == "__main__":
     from json import dump
     from pathlib import Path
     from argparse import ArgumentParser
-    from conection import engine
+    from src.conection import engine
     from time import sleep as delay
     import atexit
 
@@ -76,3 +76,4 @@ if __name__ == "__main__":
     else:
         print('por motivos de seguranção o código não sera executado em modo de produção')
         uvicorn.run("main:app", host=args.host ,port=args.port, reload=True, ssl_certfile=_ssl_certfile, ssl_keyfile=_ssl_keyfile)
+
