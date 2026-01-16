@@ -1,6 +1,6 @@
 [build-system]
 #define o que ele vai usar para buildar o projeto
-requires = ["setuptools>=42"]
+requires = ["setuptools>=61.0", "wheel"]
 #define o que ele vai usar como motor
 build-backend = "setuptools.build_meta"
 [project]

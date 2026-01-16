@@ -26,11 +26,7 @@ def main():
         except Exception as e:
             print(f"Erro ao deletar: {e}")
             #se de algo errado ele para tentar refazer o processo
-            dell_json_sqlite()
-        
-        finally:
-            exit()
-            
+            dell_json_sqlite()   
 
         print("\nServidor encerrado. Arquivo de config/temporario removido.")
 
