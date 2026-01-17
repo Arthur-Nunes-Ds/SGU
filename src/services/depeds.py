@@ -1,10 +1,10 @@
 from jose import jwt, JWTError
 from fastapi import HTTPException,status, Depends
 from fastapi.security import OAuth2PasswordBearer
-from conection import get_session
+from src.conection import get_session
 from model.usarios import Usuario
 from sqlalchemy.orm import Session
-from config import SECRETES_KEY,ALG
+from src.config import SECRETES_KEY,ALG
 
 #Base para trancar rota
 oauth_schema = OAuth2PasswordBearer('/public/logar_usuario/')

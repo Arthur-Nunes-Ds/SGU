@@ -1,4 +1,4 @@
-from conection import engine,Base
+from src.conection import engine,Base
 from decimal import Decimal
 from sqlalchemy import Column, Integer, String, Numeric
 from pydantic import BaseModel

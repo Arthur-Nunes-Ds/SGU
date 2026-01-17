@@ -1,4 +1,4 @@
-from conection import get_session
+from src.conection import get_session
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, HTTPException,status, Depends
 from model.usarios import Usuario, BaseEditarUsuarioi

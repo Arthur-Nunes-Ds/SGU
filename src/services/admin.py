@@ -1,12 +1,12 @@
-from conection import get_session
+from src.conection import get_session
 from fastapi import APIRouter, HTTPException,status, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from .depeds import RolePermitidas
-from model.usarios import Usuario, BaseCriarUsuario, BaseEditarFucionario
-from model.produtos import Produto
+from src.model.usarios import Usuario, BaseCriarUsuario, BaseEditarFucionario
+from src.model.produtos import Produto
 from typing import Literal
-from config import DEBUG, SENHA_DB
+from src.config import DEBUG, SENHA_DB
 
 #Aplica uma dependência em todas as rotas desse arquivo
 Rota_Adm = APIRouter(dependencies=[Depends(RolePermitidas(['adm']))])

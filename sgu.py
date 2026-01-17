@@ -69,11 +69,11 @@ if __name__ == "__main__":
     
     #Só executa se --debug foi passado
     if args.debug == True:
-        uvicorn.run("main:app", host=args.host ,port=args.port, reload=True, ssl_certfile=_ssl_certfile, ssl_keyfile=_ssl_keyfile)
+        uvicorn.run("src.main:app", host=args.host ,port=args.port, reload=True, ssl_certfile=_ssl_certfile, ssl_keyfile=_ssl_keyfile)
     elif args.debug == False and args.sqlite == False:
         #Modo produção (sem reload)
-        uvicorn.run("main:app", host=args.host, port=args.port, reload=False,ssl_certfile=_ssl_certfile, ssl_keyfile=_ssl_keyfile)
+        uvicorn.run("src.main:app", host=args.host, port=args.port, reload=False,ssl_certfile=_ssl_certfile, ssl_keyfile=_ssl_keyfile)
     else:
         print('por motivos de seguranção o código não sera executado em modo de produção')
-        uvicorn.run("main:app", host=args.host ,port=args.port, reload=True, ssl_certfile=_ssl_certfile, ssl_keyfile=_ssl_keyfile)
+        uvicorn.run("src.main:app", host=args.host ,port=args.port, reload=True, ssl_certfile=_ssl_certfile, ssl_keyfile=_ssl_keyfile)
 

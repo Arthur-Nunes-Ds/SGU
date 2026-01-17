@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy.exc import OperationalError
-from config import DEBUG, SQLITE, USER_DB,SENHA_DB,IP_DB,PORTA_DB,BANCO_DB
+from src.config import DEBUG, SQLITE, USER_DB,SENHA_DB,IP_DB,PORTA_DB,BANCO_DB
 
 endereco_db = None
 

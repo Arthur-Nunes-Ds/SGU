@@ -1,4 +1,4 @@
-from conection import engine,Base
+from src.conection import engine,Base
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String
 from passlib.hash import sha256_crypt as sha256

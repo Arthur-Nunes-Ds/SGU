@@ -1,8 +1,8 @@
-from conection import get_session
+from src.conection import get_session
 from sqlalchemy.orm import Session
 from typing import Optional
 from fastapi import APIRouter, HTTPException, status, Depends
-from model.produtos import Produto, BaseCadastraProtudo, BaseVenderProtudo, BaseEditarProtudo
+from src.model.produtos import Produto, BaseCadastraProtudo, BaseVenderProtudo, BaseEditarProtudo
 from sqlalchemy.exc import IntegrityError
 from .depeds import RolePermitidas
 

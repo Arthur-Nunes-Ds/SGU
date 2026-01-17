@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
-from services import Rota_Produto, Rota_Cliente, Rota_Adm, Rota_Publics, Rota_Excel
-from config import HOST_FRONT
+from src.services import Rota_Produto, Rota_Cliente, Rota_Adm, Rota_Publics, Rota_Excel
+from src.config import HOST_FRONT
 
 app = FastAPI(title='SGU')
 

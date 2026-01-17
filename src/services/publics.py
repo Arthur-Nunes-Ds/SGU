@@ -1,12 +1,12 @@
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import APIRouter, HTTPException,status, Depends
-from conection import get_session
-from model.usarios import Usuario, BaseCriarUsuario
+from src.conection import get_session
+from src.model.usarios import Usuario, BaseCriarUsuario
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from jose import jwt
 from datetime import datetime, timezone, timedelta
-from config import SECRETES_KEY,ALG,EXPIRATION_TIMER_MINUTES,USER_ADMIN,SENHA_ADMIN
+from src.config import SECRETES_KEY,ALG,EXPIRATION_TIMER_MINUTES,USER_ADMIN,SENHA_ADMIN
 
 Rota_Publics = APIRouter()
 
