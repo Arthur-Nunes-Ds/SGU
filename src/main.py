@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.services import Rota_Produto, Rota_Cliente, Rota_Adm, Rota_Publics, Rota_Excel
 from src.config import HOST_FRONT
 
-app = FastAPI(title='SGU')
+app = FastAPI(title='SGUP - Sistema de Gerenciamento de Usuários e Produto')
 
 #Configuração de CORS (Cross-Origin Resource Sharing) -> isso permite que o backend
     #se comunique com o frontend, mesmo que estejam em domínios diferentes.
