@@ -177,6 +177,7 @@ def vender_protudo(base: BaseVenderProtudo, session: Session = Depends(get_sessi
         return {'mensagem': f'produto vendido com sucesso', 'restam': {qnt_ser_removida},
                 'custo_da_venda': custo}
 
+#SECTION - Etidar Protudo
 @Rota_Produto.post('/etidar_protudo')
 def etidar_protudo(base: BaseEditarProtudo, session: Session = Depends(get_session)):
     """\nEdita dados do produto (Quantidade e/ou Preço).\
